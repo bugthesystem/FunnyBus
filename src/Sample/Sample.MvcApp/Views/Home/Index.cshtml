@@ -1,0 +1,14 @@
+﻿@model List<Sample.BusinessLayer.Models.SampleItem>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+<h3>We suggest the following:</h3>
+<ol class="round">
+    @foreach (var item in Model)
+    {
+        <li class="one">
+            @item.Name
+        </li>
+    }
+</ol>
