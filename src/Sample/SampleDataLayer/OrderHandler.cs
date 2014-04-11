@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
 using FunnyBus.Infrastructure;
 using Ploeh.AutoFixture;
@@ -26,7 +24,6 @@ namespace Sample.DataLayer
 
         public void Handle(LoadOrderByIdMessage message)
         {
-            Console.WriteLine(message.Id);
             //Code code code..
         }
     }
