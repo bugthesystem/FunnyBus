@@ -2,6 +2,6 @@ namespace Sample.Contracts
 {
     public class LoadOrderByIdMessage
     {
-        public string Id  { get; set; }
+        public int Id  { get; set; }
     }
 }
