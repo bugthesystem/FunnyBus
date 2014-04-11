@@ -39,11 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoadByIdMessage.cs" />
-    <Compile Include="SampleItemModel.cs" />
-    <Compile Include="LoadItemsMessage.cs" />
+    <Compile Include="LoadOrderByIdMessage.cs" />
+    <Compile Include="OrderItemModel.cs" />
+    <Compile Include="LoadOrdersMessage.cs" />
     <Compile Include="OrderCreatedMessage.cs" />
-    <Compile Include="ProductCreatedMessage.cs" />
+    <Compile Include="CreateProductMessage.cs" />
     <Compile Include="ProductDeletedMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

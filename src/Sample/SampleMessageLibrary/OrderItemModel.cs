@@ -1,6 +1,6 @@
 namespace Sample.Contracts
 {
-    public class SampleItemModel
+    public class OrderItemModel
     {
         public string Name { get; set; }
     }

@@ -21,19 +21,17 @@ namespace Sample.ConsoleApp
 
             var bus = container.Resolve<IFunnyBus>();
 
-            bus.Publish(new ProductCreatedMessage { Message = "Called from Main (Created Message)" });
-            bus.Publish(new ProductDeletedMessage { Message = "Called from Main (Deleted Message)" });
+            bus.Publish(new CreateProductMessage { Name = "Funny Product" });
+            var orders = bus.Publish<LoadOrdersMessage, List<OrderItemModel>>(new LoadOrdersMessage { UserId = 10 });
 
-            var homeItemModels = bus.Publish<LoadItemsMessage, List<SampleItemModel>>(new LoadItemsMessage { Prefix = "A.Q" });
-
-            Dump(homeItemModels);
+            Dump(orders);
 
             int read = Console.Read();
         }
 
-        private static void Dump(IEnumerable<SampleItemModel> homeItemModels)
+        private static void Dump(IEnumerable<OrderItemModel> homeItemModels)
         {
-            foreach (SampleItemModel homeItemModel in homeItemModels)
+            foreach (OrderItemModel homeItemModel in homeItemModels)
             {
                 Console.WriteLine(homeItemModel.Name);
             }

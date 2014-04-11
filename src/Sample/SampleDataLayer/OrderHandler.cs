@@ -1,24 +1,30 @@
-﻿using System;
-using FunnyBus;
+﻿using System.Collections.Generic;
+using System.Linq;
 using FunnyBus.Infrastructure;
+using Ploeh.AutoFixture;
 using Sample.Contracts;
 
 namespace Sample.DataLayer
 {
-    public class OrderHandler : IHandle<OrderCreatedMessage>
+    public class OrderHandler :
+        IHandle<LoadOrdersMessage, List<OrderItemModel>>,
+        IHandle<LoadOrderByIdMessage>
     {
-        private readonly IFunnyBus _bus;
+        private readonly IFixture _fixture;
 
-        public OrderHandler(IFunnyBus bus)
+        public OrderHandler()
         {
-            _bus = bus;
+            _fixture = new Fixture();
         }
 
-        public void Handle(OrderCreatedMessage message)
+        public List<OrderItemModel> Handle(LoadOrdersMessage message)
         {
-            Console.WriteLine(message.Message);
-            _bus.UnSubscribe(this);//TODO: 
-            _bus.Publish(new ProductDeletedMessage { Message = "Called from orderhandler handle Created Message" });
+            return _fixture.CreateMany<OrderItemModel>(10).ToList();
+        }
+
+        public void Handle(LoadOrderByIdMessage message)
+        {
+            //Code code code..
         }
     }
 }

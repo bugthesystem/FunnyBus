@@ -7,7 +7,7 @@ namespace Sample.BusinessLayer.Infrastructure
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(typeof(ItemsHandler).Assembly).AsSelf().SingleInstance(); //TODO: As Implemented Interfaces
+            builder.RegisterAssemblyTypes(typeof(OrderHandler).Assembly).AsSelf().SingleInstance(); //TODO: As Implemented Interfaces
             builder.RegisterType<HomerControllerAgent>().As<IHomerControllerAgent>().SingleInstance();
             base.Load(builder);
         }
