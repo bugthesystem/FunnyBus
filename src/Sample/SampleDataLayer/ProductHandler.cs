@@ -17,13 +17,11 @@ namespace Sample.DataLayer
         public void Handle(CreateProductMessage message)
         {
             Console.WriteLine(message.Name);
-            _bus.Publish(new OrderCreatedMessage { Message = "Called from producthandler handle Created Name" });
         }
 
         public void Handle(ProductDeletedMessage message)
         {
             Console.WriteLine(message.Message);
-            _bus.Publish(new CreateProductMessage { Name = "Called from producthandler handle deleted Name" });
         }
     }
 }
