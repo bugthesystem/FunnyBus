@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<id>FunnyBus</id>
+		<version>0.1.0</version>
+		<authors>ziyasal</authors>
+		<owners>ziyasal</owners>
+		<projectUrl>https://github.com/ziyasal/FunnyBus</projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Simple event aggregator/messenger for .net applications</description>
+		<summary>Simple event aggregator/messenger for .net applications.</summary>
+		<tags>FunnyBus messenger eventaggregator bus</tags>
+	</metadata>
+	<files>
+		<file src="..\BuildArtifacts\FunnyBus\bin\net45\FunnyBus.dll" target="lib\net45\FunnyBus.dll" />
+		<file src="..\BuildArtifacts\FunnyBus\bin\net40\FunnyBus.dll" target="lib\net40\FunnyBus.dll" />
+	</files>
+</package>
