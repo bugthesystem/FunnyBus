@@ -1,4 +1,4 @@
 FunnyBus
 ========
 
-An experimental message bus for .net applications.
+Simple event aggregator/messenger for .net applications
