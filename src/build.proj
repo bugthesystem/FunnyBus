@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--EXTERNAL_PROPERTIES: MSBuildThisFileDirectory-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="Build">
+    <!--FX 4.5 START-->
+    <MSBuild Projects=".\FunnyBus\FunnyBus.csproj"
+             Properties="Configuration=Release;OutputPath=$(MSBuildThisFileDirectory)BuildArtifacts\FunnyBus\bin\net45;
+			 IntermediateOutputPath=$(MSBuildThisFileDirectory)BuildArtifacts\FunnyBus\obj\net45\;TargetFrameworkVersion=v4.5" />
+    <MSBuild Projects=".\FunnyBus.Integration.Autofac\FunnyBus.Integration.Autofac.csproj"
+             Properties="Configuration=Release;OutputPath=$(MSBuildThisFileDirectory)BuildArtifacts\FunnyBus.Integration.Autofac\bin\net45;
+       IntermediateOutputPath=$(MSBuildThisFileDirectory)BuildArtifacts\FunnyBus.Integration.Autofac\obj\net45\;TargetFrameworkVersion=v4.5" />
+    <!--FX 4.5 END-->
+    <!--FX 4.0 START-->
+    <MSBuild Projects=".\FunnyBus\FunnyBus.csproj"
+             Properties="Configuration=Release;OutputPath=$(MSBuildThisFileDirectory)BuildArtifacts\FunnyBus\bin\net40;
+			 IntermediateOutputPath=$(MSBuildThisFileDirectory)BuildArtifacts\FunnyBus\obj\net40\;TargetFrameworkVersion=v4.0" />
+    <MSBuild Projects=".\FunnyBus.Integration.Autofac\FunnyBus.Integration.Autofac.csproj"
+             Properties="Configuration=Release;OutputPath=$(MSBuildThisFileDirectory)BuildArtifacts\FunnyBus.Integration.Autofac\bin\net40;
+			 IntermediateOutputPath=$(MSBuildThisFileDirectory)BuildArtifacts\FunnyBus.Integration.Autofac\obj\net40\;TargetFrameworkVersion=v4.0" />
+   <!--FX 4.0 END-->
+  </Target>
+  
+</Project>
