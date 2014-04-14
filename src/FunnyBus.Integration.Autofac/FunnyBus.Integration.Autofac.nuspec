@@ -16,7 +16,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\BuildArtifacts\FunnyBus\bin\net45\FunnyBus.Integration.Autofac.dll" target="lib\net45\FunnyBus.Integration.Autofac.dll" />
-    <file src="..\BuildArtifacts\FunnyBus\bin\net40\FunnyBus.Integration.Autofac.dll" target="lib\net40\FunnyBus.Integration.Autofac.dll" />
+    <file src="..\BuildArtifacts\FunnyBus.Integration.Autofac\bin\net45\FunnyBus.Integration.Autofac.dll" target="lib\net45\FunnyBus.Integration.Autofac.dll" />
+    <file src="..\BuildArtifacts\FunnyBus.Integration.Autofac\bin\net40\FunnyBus.Integration.Autofac.dll" target="lib\net40\FunnyBus.Integration.Autofac.dll" />
   </files>
 </package>

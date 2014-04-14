@@ -4,8 +4,8 @@ namespace FunnyBus.Infrastructure.Store
 {
     internal interface IHandlerStore
     {
-        Type Check(Type type);
-        Type CheckByMessageType(Type messageType);
+        Type Get(Type type);
+        Type GetByMessageType(Type messageType);
 
         bool Remove(Type key);
 

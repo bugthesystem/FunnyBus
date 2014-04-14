@@ -91,7 +91,7 @@ namespace FunnyBus
             Guard.AgainstNullArgument("message to publish", message);
 
             Type messageType = message.GetType();
-            Type handlerType = _store.CheckByMessageType(messageType);
+            Type handlerType = _store.GetByMessageType(messageType);
 
             if (handlerType == null) { throw new NotRegisteredException(messageType); }
 
@@ -111,7 +111,7 @@ namespace FunnyBus
             Guard.AgainstNullArgument("message to publish", message);
 
             Type messageType = message.GetType();
-            Type handlerType = _store.CheckByMessageType(messageType);
+            Type handlerType = _store.GetByMessageType(messageType);
 
             if (handlerType == null) { throw new NotRegisteredException(messageType); }
 

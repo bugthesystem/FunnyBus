@@ -10,32 +10,34 @@ namespace FunnyBus.Infrastructure.Reflection
         {
             foreach (Assembly executingAssembly in AppDomain.CurrentDomain.GetAssemblies())
             {
-                if (executingAssembly.DefinedTypes != null)
+
+                foreach (Type definedType in executingAssembly.GetTypes())
                 {
-                    foreach (TypeInfo definedType in executingAssembly.DefinedTypes)
+                    if (definedType.IsClass)
                     {
-                        if (definedType.IsClass)
+                        foreach (Type @interface in definedType.GetInterfaces())
                         {
-                            foreach (Type @interface in definedType.GetInterfaces())
+//#if NET40
+                            Type[] genericTypeArguments = @interface.GetGenericArguments();
+//#else
+//                            Type[] genericTypeArguments = @interface.GenericTypeArguments;
+//#endif
+                            Type genericType = null;
+
+                            switch (genericTypeArguments.Count())
                             {
-                                Type[] genericTypeArguments = @interface.GenericTypeArguments;
-                                Type genericType = null;
-
-                                switch (genericTypeArguments.Count())
-                                {
-                                    case 1:
-                                        genericType = typeof(IHandle<>).MakeGenericType(genericTypeArguments.First());
-                                        break;
-                                    case 2:
-                                        genericType = typeof(IHandle<,>).MakeGenericType(genericTypeArguments[0], genericTypeArguments[1]);
-                                        break;
-                                }
-
-                                if (genericType != null && @interface == genericType && genericType.IsAssignableFrom(definedType.AsType()))
-                                {
-                                    addToRegistry(definedType.AsType());
+                                case 1:
+                                    genericType = typeof(IHandle<>).MakeGenericType(genericTypeArguments.First());
                                     break;
-                                }
+                                case 2:
+                                    genericType = typeof(IHandle<,>).MakeGenericType(genericTypeArguments[0], genericTypeArguments[1]);
+                                    break;
+                            }
+
+                            if (genericType != null && @interface == genericType && genericType.IsAssignableFrom(definedType))
+                            {
+                                addToRegistry(definedType);
+                                break;
                             }
                         }
                     }
