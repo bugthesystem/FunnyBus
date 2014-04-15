@@ -37,6 +37,14 @@
     <Reference Include="Autofac">
       <HintPath>..\..\packages\Autofac.3.3.1\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="FunnyBus, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\FunnyBus.0.1.0\lib\net45\FunnyBus.dll</HintPath>
+    </Reference>
+    <Reference Include="FunnyBus.Integration.Autofac, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\FunnyBus.0.1.0\lib\net45\FunnyBus.Integration.Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -61,14 +69,6 @@
     <ProjectReference Include="..\SampleMessageLibrary\Sample.Contracts.csproj">
       <Project>{6A6EC9EF-7961-489F-B80F-C1C32C7446BA}</Project>
       <Name>Sample.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\FunnyBus.Integration.Autofac\FunnyBus.Integration.Autofac.csproj">
-      <Project>{8939F1FC-E8B5-4C87-996F-4A91704738B7}</Project>
-      <Name>FunnyBus.Integration.Autofac</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\FunnyBus\FunnyBus.csproj">
-      <Project>{63742AFE-976B-4B6A-B0B8-F36D5A44B8E9}</Project>
-      <Name>FunnyBus</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
