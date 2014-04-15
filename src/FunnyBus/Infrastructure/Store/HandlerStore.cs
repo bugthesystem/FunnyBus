@@ -32,6 +32,28 @@ namespace FunnyBus.Infrastructure.Store
             return result;
         }
 
+        public Type GetAsIHandleByMessageType(Type messageType)
+        {
+            Type result = null;
+            foreach (KeyValuePair<Type, List<HandleDefinition>> pair in _typeRegistry)
+            {
+                HandleDefinition handleDefinition = pair.Value.SingleOrDefault(def => def.MessageType == messageType);
+                if (handleDefinition != null)
+                {
+                    if (handleDefinition.HasReturnType && handleDefinition.ReturnType != null)
+                    {
+                        result = typeof(IHandle<,>).MakeGenericType(messageType, handleDefinition.ReturnType);
+                    }
+                    else
+                    {
+                        result = typeof(IHandle<>).MakeGenericType(messageType);
+                    }
+                    break;
+                }
+            }
+            return result;
+        }
+
         public Type GetByMessageType(Type messageType)
         {
             return _typeRegistry.SingleOrDefault(pair => pair.Value.Find(def => def.MessageType == messageType) != null).Key;
@@ -49,23 +71,30 @@ namespace FunnyBus.Infrastructure.Store
 
         private List<HandleDefinition> GetHandleDefinitions(Type typeToWatch)
         {
-//#if NET40
+            //#if NET40
             return typeToWatch.GetInterfaces()
                 .Where(type => type.IsGenericType)
-                .Select(type => new HandleDefinition
+                .Select(type =>
                 {
-                    MessageType = type.GetGenericArguments().First(),
-                    MessageFullName = type.GetGenericArguments().First().FullName
+                    Type[] genericArguments = type.GetGenericArguments();
+
+                    return new HandleDefinition
+                                    {
+                                        MessageType = genericArguments.First(),
+                                        MessageFullName = genericArguments.First().FullName,
+                                        ReturnType = genericArguments.Length > 1 ? genericArguments.Last() : null,
+                                        HasReturnType = genericArguments.Length > 1
+                                    };
                 }).ToList();
-//#else
-//            return typeToWatch.GetInterfaces()
-//                .Where(type => type.IsGenericType)
-//                .Select(type => new HandleDefinition
-//                {
-//                    MessageType = type.GenericTypeArguments.First(),
-//                    MessageFullName = type.GenericTypeArguments.First().FullName
-//                }).ToList();
-//#endif
+            //#else
+            //            return typeToWatch.GetInterfaces()
+            //                .Where(type => type.IsGenericType)
+            //                .Select(type => new HandleDefinition
+            //                {
+            //                    MessageType = type.GenericTypeArguments.First(),
+            //                    MessageFullName = type.GenericTypeArguments.First().FullName
+            //                }).ToList();
+            //#endif
         }
     }
 }

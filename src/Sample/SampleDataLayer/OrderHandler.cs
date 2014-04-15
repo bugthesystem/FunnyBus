@@ -11,10 +11,10 @@ namespace Sample.DataLayer
         IHandle<LoadOrdersMessage, List<OrderItemModel>>,
         IHandle<LoadOrderByIdMessage>
     {
-        private readonly IFunnyBus _bus;
+        private readonly IBus _bus;
         private readonly IFixture _fixture;
 
-        public OrderHandler(IFunnyBus bus)
+        public OrderHandler(IBus bus)
         {
             _bus = bus;
             _fixture = new Fixture();

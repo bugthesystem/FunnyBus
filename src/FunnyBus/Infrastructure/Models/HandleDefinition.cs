@@ -6,5 +6,7 @@ namespace FunnyBus.Infrastructure.Models
     {
         public string MessageFullName { get; set; }
         public Type MessageType { get; set; }
+        public bool HasReturnType { get; set; }
+        public Type ReturnType { get; set; }
     }
 }

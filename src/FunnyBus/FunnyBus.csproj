@@ -45,20 +45,15 @@
     <Compile Include="Exceptions\ResolutionException.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="Infrastructure\Models\HandleDefinition.cs" />
-    <Compile Include="Infrastructure\Reflection\HandleMethodFinder.cs" />
     <Compile Include="Infrastructure\Reflection\HandlerScanner.cs" />
     <Compile Include="Infrastructure\Configuration\IConfigutaionContext.cs" />
     <Compile Include="Infrastructure\IHandle.cs" />
-    <Compile Include="Infrastructure\Reflection\IHandleMethodFinder.cs" />
     <Compile Include="Infrastructure\Reflection\IHandlerScanner.cs" />
-    <Compile Include="Infrastructure\IoC\DefaultDependencyResolverAdapter.cs" />
     <Compile Include="Infrastructure\IoC\IDependencyResolverAdapter.cs" />
-    <Compile Include="Infrastructure\IoC\IPoorDependencyContainer.cs" />
-    <Compile Include="Infrastructure\IoC\PoorDependencyContainer.cs" />
     <Compile Include="Infrastructure\Store\HandlerStore.cs" />
     <Compile Include="Infrastructure\Store\IHandlerStore.cs" />
-    <Compile Include="FunnyBus.cs" />
-    <Compile Include="IFunnyBus.cs" />
+    <Compile Include="Bus.cs" />
+    <Compile Include="IBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

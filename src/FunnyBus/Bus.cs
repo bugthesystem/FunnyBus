@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using FunnyBus.Exceptions;
 using FunnyBus.Infrastructure.Configuration;
 using FunnyBus.Infrastructure.IoC;
@@ -10,37 +7,35 @@ using FunnyBus.Infrastructure.Store;
 
 namespace FunnyBus
 {
-    public sealed class FunnyBus : IFunnyBus, IConfigutaionContext
+    public sealed class Bus : IBus, IConfigutaionContext
     {
         private readonly IHandlerStore _store;
         private readonly IHandlerScanner _handlerScanner;
-        private readonly IHandleMethodFinder _handleMethodFinder;
 
         private bool _initCompleted;
-        private static readonly Lazy<IFunnyBus> LazyInstance = new Lazy<IFunnyBus>(() => new FunnyBus(), true);
+        private static readonly Lazy<IBus> LazyInstance = new Lazy<IBus>(() => new Bus(), true);
 
-        public FunnyBus()
+        public Bus()
             : this(new HandlerStore())
         {
 
         }
 
-        internal FunnyBus(IHandlerStore store)
-            : this(store, new HandlerScanner(), new HandleMethodFinder())
+        internal Bus(IHandlerStore store)
+            : this(store, new HandlerScanner())
         {
 
         }
 
-        internal FunnyBus(IHandlerStore store, HandlerScanner handlerScanner, HandleMethodFinder handleMethodFinder)
+        internal Bus(IHandlerStore store, HandlerScanner handlerScanner)
         {
             _store = store;
             _handlerScanner = handlerScanner;
-            _handleMethodFinder = handleMethodFinder;
 
             EnsureSystemInit();
         }
 
-        public static IFunnyBus Instance
+        public static IBus Instance
         {
             get { return LazyInstance.Value; }
         }
@@ -49,7 +44,7 @@ namespace FunnyBus
         {
             context(Instance as IConfigutaionContext);
 
-            var self = Instance as FunnyBus;
+            var self = Instance as Bus;
             if (self != null) self.InitRegistry();
         }
 
@@ -91,19 +86,12 @@ namespace FunnyBus
             Guard.AgainstNullArgument("message to publish", message);
 
             Type messageType = message.GetType();
-            Type handlerType = _store.GetByMessageType(messageType);
+            Type handlerType = _store.GetAsIHandleByMessageType(messageType);
 
             if (handlerType == null) { throw new NotRegisteredException(messageType); }
 
-            object handlerInstance = IoC.GetService(handlerType); //TODO IHandle<T,K>
-            MethodInfo handleMethod = _handleMethodFinder.Find(handlerType, messageType);
-
-            if (handleMethod != null)
-            {
-                return (TResult)handleMethod.Invoke(handlerInstance, new[] { message });
-            }
-
-            return default(TResult);
+            dynamic handlerInstance = IoC.GetService(handlerType);
+            return handlerInstance.Handle((dynamic)message);
         }
 
         public void Publish(object message)
@@ -111,15 +99,12 @@ namespace FunnyBus
             Guard.AgainstNullArgument("message to publish", message);
 
             Type messageType = message.GetType();
-            Type handlerType = _store.GetByMessageType(messageType);
+            Type handlerTypeAsIHandle = _store.GetAsIHandleByMessageType(messageType);
 
-            if (handlerType == null) { throw new NotRegisteredException(messageType); }
+            if (handlerTypeAsIHandle == null) { throw new NotRegisteredException(messageType); }
 
-            object handlerInstance = IoC.GetService(handlerType);
-
-            IEnumerable<MethodInfo> handleMethods = _handleMethodFinder.FindAll(handlerType, messageType);
-
-            handleMethods.ToList().ForEach(handleMethod => handleMethod.Invoke(handlerInstance, new[] { message }));
+            dynamic handlerInstance = IoC.GetService(handlerTypeAsIHandle);
+            handlerInstance.Handle((dynamic)message);
         }
 
         private void UnSubscribeImpl(Type key)
@@ -130,13 +115,6 @@ namespace FunnyBus
 
         private void EnsureSystemInit()
         {
-            if (IoC == null)
-            {
-                //TODO: Not working for now..
-                IPoorDependencyContainer container = new PoorDependencyContainer();
-                container.Bind<IFunnyBus>(() => Instance);
-                IoC = new DefaultDependencyResolverAdapter(container);
-            }
             if (!_initCompleted) { InitRegistry(); }
         }
 

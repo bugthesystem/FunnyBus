@@ -14,12 +14,12 @@ namespace FunnyBus.Tests
     {
         private Mock<IHandlerStore> _handlersStoreMock;
 
-        private IFunnyBus _bus;
+        private IBus _bus;
 
         protected override void FinalizeSetUp()
         {
             _handlersStoreMock = MockFor<IHandlerStore>();
-            _bus = new FunnyBus(_handlersStoreMock.Object);
+            _bus = new Bus(_handlersStoreMock.Object);
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace FunnyBus.Tests
             Type messageType = typeof(LoadOrdersMessage);
 
             _handlersStoreMock.Setup(store => store.Add(handlerType)).Returns(true);
-            _handlersStoreMock.Setup(store => store.GetByMessageType(messageType)).Returns(handlerType);
+            _handlersStoreMock.Setup(store => store.GetAsIHandleByMessageType(messageType)).Returns(handlerType);
 
             _bus.Subscribe<OrderHandler>();
             List<OrderItemModel> result = _bus.Publish<LoadOrdersMessage, List<OrderItemModel>>(new LoadOrdersMessage { UserId = 10 });
@@ -45,7 +45,7 @@ namespace FunnyBus.Tests
 
             _handlersStoreMock.Setup(store => store.Add(handlerType)).Returns(true);
             _handlersStoreMock.Setup(store => store.Remove(handlerType)).Returns(true);
-            _handlersStoreMock.Setup(store => store.GetByMessageType(messageType)).Returns((Type)null);
+            _handlersStoreMock.Setup(store => store.GetAsIHandleByMessageType(messageType)).Returns((Type)null);
 
             _bus.Subscribe<OrderHandler>();
             _bus.UnSubscribe<OrderHandler>();

@@ -7,9 +7,9 @@ namespace Sample.DataLayer
 {
     public class ProductHandler : IHandle<CreateProductMessage>, IHandle<ProductDeletedMessage>
     {
-        private readonly IFunnyBus _bus;
+        private readonly IBus _bus;
 
-        public ProductHandler(IFunnyBus bus)
+        public ProductHandler(IBus bus)
         {
             _bus = bus;
         }

@@ -1,6 +1,6 @@
 ﻿namespace FunnyBus
 {
-    public interface IFunnyBus
+    public interface IBus
     {
         void Subscribe<THandler>(THandler handler) where THandler : class;
         void Subscribe<THandler>() where THandler : class;

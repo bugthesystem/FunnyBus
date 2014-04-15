@@ -13,13 +13,13 @@ namespace Sample.ConsoleApp
         public static void Main()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterAssemblyTypes(typeof(OrderHandler).Assembly).AsSelf().SingleInstance(); //TODO: As Implemented Interfaces
-            builder.Register(context => FunnyBus.FunnyBus.Instance).As<IFunnyBus>();
+            builder.RegisterAssemblyTypes(typeof(OrderHandler).Assembly).AsImplementedInterfaces().SingleInstance();
+            builder.Register(context => Bus.Instance).As<IBus>();
 
             IContainer container = builder.Build();
-            FunnyBus.FunnyBus.Configure(context => context.SetResolverAdapter(new AutofacDependencyResolverAdapter(container)));
+            Bus.Configure(context => context.SetResolverAdapter(new AutofacDependencyResolverAdapter(container)));
 
-            var bus = container.Resolve<IFunnyBus>();
+            var bus = container.Resolve<IBus>();
 
             bus.Publish(new CreateProductMessage { Name = "Funny Product" });
             var orders = bus.Publish<LoadOrdersMessage, List<OrderItemModel>>(new LoadOrdersMessage { UserId = 10 });

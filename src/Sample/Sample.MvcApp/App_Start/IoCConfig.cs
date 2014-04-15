@@ -15,13 +15,13 @@ namespace Sample.MvcApp
             ContainerBuilder builder = new ContainerBuilder();
 
             builder.RegisterControllers(typeof(HomeController).Assembly);
-            builder.Register(context => FunnyBus.FunnyBus.Instance).As<IFunnyBus>().SingleInstance();
+            builder.Register(context => FunnyBus.Bus.Instance).As<IBus>().SingleInstance();
 
             builder.RegisterModule<BusinessLayerModule>();
 
             IContainer container = builder.Build();
 
-            FunnyBus.FunnyBus.Configure(context => context.SetResolverAdapter(new AutofacDependencyResolverAdapter(container)));
+            FunnyBus.Bus.Configure(context => context.SetResolverAdapter(new AutofacDependencyResolverAdapter(container)));
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }

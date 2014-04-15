@@ -8,9 +8,9 @@ namespace Sample.BusinessLayer
 {
     public class HomerControllerAgent : IHomerControllerAgent
     {
-        private readonly IFunnyBus _bus;
+        private readonly IBus _bus;
 
-        public HomerControllerAgent(IFunnyBus bus)
+        public HomerControllerAgent(IBus bus)
         {
             _bus = bus;
         }
