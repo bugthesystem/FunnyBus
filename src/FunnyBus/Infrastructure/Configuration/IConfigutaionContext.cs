@@ -4,6 +4,6 @@ namespace FunnyBus.Infrastructure.Configuration
 {
     public interface IConfigutaionContext
     {
-        void SetResolverAdapter(IDependencyResolverAdapter dependencyResolverAdapter);
+        void SetResolverAdapter(IFunnyDependencyResolver funnyDependencyResolver);
     }
 }

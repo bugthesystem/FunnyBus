@@ -12,16 +12,16 @@ namespace Sample.MvcApp
     {
         public static void Register()
         {
-            ContainerBuilder builder = new ContainerBuilder();
+            var builder = new ContainerBuilder();
 
             builder.RegisterControllers(typeof(HomeController).Assembly);
-            builder.Register(context => FunnyBus.Bus.Instance).As<IBus>().SingleInstance();
+            builder.Register(context => Bus.Instance).As<IBus>().SingleInstance();
 
             builder.RegisterModule<BusinessLayerModule>();
 
             IContainer container = builder.Build();
 
-            FunnyBus.Bus.Configure(context => context.SetResolverAdapter(new AutofacDependencyResolverAdapter(container)));
+            Bus.Configure(context => context.SetResolverAdapter(new AutofacFunnyDependencyResolver(container)));
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }

@@ -130,12 +130,12 @@ namespace FunnyBus
             _store.Add(handler);
         }
 
-        private IDependencyResolverAdapter IoC { get; set; }
+        private IFunnyDependencyResolver IoC { get; set; }
 
-        public void SetResolverAdapter(IDependencyResolverAdapter dependencyResolverAdapter)
+        public void SetResolverAdapter(IFunnyDependencyResolver funnyDependencyResolver)
         {
-            Guard.AgainstNullArgument("dependencyResolverAdapter", dependencyResolverAdapter);
-            IoC = dependencyResolverAdapter;
+            Guard.AgainstNullArgument("funnyDependencyResolver", funnyDependencyResolver);
+            IoC = funnyDependencyResolver;
         }
     }
 }

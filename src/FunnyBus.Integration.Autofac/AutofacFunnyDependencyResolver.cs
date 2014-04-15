@@ -5,11 +5,11 @@ using FunnyBus.Infrastructure.IoC;
 
 namespace FunnyBus.Integration.Autofac
 {
-    public class AutofacDependencyResolverAdapter : IDependencyResolverAdapter
+    public class AutofacFunnyDependencyResolver : IFunnyDependencyResolver
     {
         private readonly IContainer _container;
 
-        public AutofacDependencyResolverAdapter(IContainer container)
+        public AutofacFunnyDependencyResolver(IContainer container)
         {
             _container = container;
         }

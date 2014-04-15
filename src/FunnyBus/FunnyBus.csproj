@@ -49,7 +49,7 @@
     <Compile Include="Infrastructure\Configuration\IConfigutaionContext.cs" />
     <Compile Include="Infrastructure\IHandle.cs" />
     <Compile Include="Infrastructure\Reflection\IHandlerScanner.cs" />
-    <Compile Include="Infrastructure\IoC\IDependencyResolverAdapter.cs" />
+    <Compile Include="Infrastructure\IoC\IFunnyDependencyResolver.cs" />
     <Compile Include="Infrastructure\Store\HandlerStore.cs" />
     <Compile Include="Infrastructure\Store\IHandlerStore.cs" />
     <Compile Include="Bus.cs" />
