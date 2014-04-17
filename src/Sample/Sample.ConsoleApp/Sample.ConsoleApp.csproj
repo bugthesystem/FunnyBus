@@ -39,11 +39,12 @@
     </Reference>
     <Reference Include="FunnyBus, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FunnyBus.0.1.1\lib\net45\FunnyBus.dll</HintPath>
-    </Reference>
-    <Reference Include="FunnyBus.Integration.Autofac">
-      <HintPath>..\..\packages\FunnyBus.0.1.1\lib\net45\FunnyBus.Integration.Autofac.dll</HintPath>
+      <HintPath>..\..\packages\FunnyBus.0.1.2\lib\net45\FunnyBus.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="FunnyBus.Integration.Autofac, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\FunnyBus.0.1.2\lib\net45\FunnyBus.Integration.Autofac.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

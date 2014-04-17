@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>FunnyBus.Integration.Autofac</id>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
     <authors>ziyasal</authors>
     <owners>ziyasal</owners>
     <projectUrl>https://github.com/ziyasal/FunnyBus</projectUrl>
@@ -12,7 +12,7 @@
     <tags>FunnyBus Autofac IoC messenger eventaggregator bus</tags>
     <dependencies>
       <dependency id="Autofac" version="3.0.0" />
-      <dependency id="FunnyBus" version="0.1.1" />
+      <dependency id="FunnyBus" version="0.1.2" />
     </dependencies>
   </metadata>
   <files>
