@@ -22,7 +22,7 @@ namespace Sample.DataLayer
 
         public List<OrderItemModel> Handle(LoadOrdersMessage message)
         {
-            _bus.Publish(new ProductDeletedMessage { Message = "Delete Funny product.." });
+            _bus.Publish(new DeleteProductMessage { Id = 10 });
             return _fixture.CreateMany<OrderItemModel>(10).ToList();
         }
 

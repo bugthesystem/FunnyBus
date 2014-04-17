@@ -4,6 +4,7 @@ namespace FunnyBus.Infrastructure.Configuration
 {
     public interface IConfigutaionContext
     {
-        void SetResolverAdapter(IFunnyDependencyResolver funnyDependencyResolver);
+        void SetResolver(IFunnyDependencyResolver funnyDependencyResolver);
+        bool AutoScanHandlers { set; }
     }
 }

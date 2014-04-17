@@ -17,7 +17,7 @@ namespace Sample.ConsoleApp
             builder.Register(context => Bus.Instance).As<IBus>();
 
             IContainer container = builder.Build();
-            Bus.Configure(context => context.SetResolverAdapter(new AutofacDependencyResolverAdapter(container)));
+            Bus.Configure(context => context.SetResolverAdapter(new AutofacFunnyDependencyResolver(container)));
 
             var bus = container.Resolve<IBus>();
 

@@ -44,7 +44,7 @@
     <Compile Include="LoadOrdersMessage.cs" />
     <Compile Include="OrderCreatedMessage.cs" />
     <Compile Include="CreateProductMessage.cs" />
-    <Compile Include="ProductDeletedMessage.cs" />
+    <Compile Include="DeleteProductMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -31,6 +31,7 @@ namespace FunnyBus
         {
             _store = store;
             _handlerScanner = handlerScanner;
+            AutoScanHandlers = true;
 
             EnsureSystemInit();
         }
@@ -45,7 +46,7 @@ namespace FunnyBus
             context(Instance as IConfigutaionContext);
 
             var self = Instance as Bus;
-            if (self != null) self.InitRegistry();
+            if (self != null && self.AutoScanHandlers) self.InitRegistry();
         }
 
         public void Subscribe<THandler>(THandler handler) where THandler : class
@@ -132,10 +133,12 @@ namespace FunnyBus
 
         private IFunnyDependencyResolver IoC { get; set; }
 
-        public void SetResolverAdapter(IFunnyDependencyResolver funnyDependencyResolver)
+        public void SetResolver(IFunnyDependencyResolver funnyDependencyResolver)
         {
             Guard.AgainstNullArgument("funnyDependencyResolver", funnyDependencyResolver);
             IoC = funnyDependencyResolver;
         }
+
+        public bool AutoScanHandlers { private get; set; }
     }
 }

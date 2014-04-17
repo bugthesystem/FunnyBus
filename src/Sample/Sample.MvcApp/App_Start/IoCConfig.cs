@@ -21,7 +21,7 @@ namespace Sample.MvcApp
 
             IContainer container = builder.Build();
 
-            Bus.Configure(context => context.SetResolverAdapter(new AutofacFunnyDependencyResolver(container)));
+            Bus.Configure(context => context.SetResolver(new AutofacFunnyDependencyResolver(container)));
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }

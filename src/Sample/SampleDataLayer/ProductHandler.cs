@@ -5,7 +5,7 @@ using Sample.Contracts;
 
 namespace Sample.DataLayer
 {
-    public class ProductHandler : IHandle<CreateProductMessage>, IHandle<ProductDeletedMessage>
+    public class ProductHandler : IHandle<CreateProductMessage>, IHandle<DeleteProductMessage>
     {
         private readonly IBus _bus;
 
@@ -19,9 +19,9 @@ namespace Sample.DataLayer
             Console.WriteLine(message.Name);
         }
 
-        public void Handle(ProductDeletedMessage message)
+        public void Handle(DeleteProductMessage message)
         {
-            Console.WriteLine(message.Message);
+            Console.WriteLine(message.Id);
         }
     }
 }
