@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using FunnyBus.Exceptions;
-using FunnyBus.Infrastructure.Store;
-using Moq;
 using NUnit.Framework;
+using Moq;
+
 using Sample.Contracts;
 using Sample.DataLayer;
+using FluentAssertions;
+using FunnyBus.Exceptions;
+using System.Collections.Generic;
+using FunnyBus.Infrastructure.Store;
 
 namespace FunnyBus.Tests
 {
@@ -38,7 +39,7 @@ namespace FunnyBus.Tests
         }
 
         [Test]
-        public void Publish_Throws_NotRegiteredException_After_UnSubscribe_Success_Test()
+        public void Publish_Throws_NotRegisteredException_After_UnSubscribe_Success_Test()
         {
             Type handlerType = typeof(OrderHandler);
             Type messageType = typeof(LoadOrdersMessage);
