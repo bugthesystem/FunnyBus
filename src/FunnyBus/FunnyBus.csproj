@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="Exceptions\ResolutionException.cs" />
     <Compile Include="Guard.cs" />
-    <Compile Include="Infrastructure\Models\HandleDefinition.cs" />
+    <Compile Include="Infrastructure\HandleDefinition.cs" />
     <Compile Include="Infrastructure\Reflection\HandlerScanner.cs" />
     <Compile Include="Infrastructure\Configuration\IConfigurationContext.cs" />
     <Compile Include="Infrastructure\IHandle.cs" />

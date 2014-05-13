@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FunnyBus.Infrastructure.Models
+namespace FunnyBus.Infrastructure
 {
     internal class HandleDefinition
     {

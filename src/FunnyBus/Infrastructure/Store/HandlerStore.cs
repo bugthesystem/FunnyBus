@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using FunnyBus.Infrastructure.Models;
 
 namespace FunnyBus.Infrastructure.Store
 {
