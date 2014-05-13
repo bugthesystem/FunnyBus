@@ -7,7 +7,7 @@ using FunnyBus.Infrastructure.Store;
 
 namespace FunnyBus
 {
-    public sealed class Bus : IBus, IConfigutaionContext
+    public sealed class Bus : IBus, IConfigurationContext
     {
         private readonly IHandlerStore _store;
         private readonly IHandlerScanner _handlerScanner;
@@ -48,9 +48,9 @@ namespace FunnyBus
         /// 
         /// </summary>
         /// <param name="context"></param>
-        public static void Configure(Action<IConfigutaionContext> context)
+        public static void Configure(Action<IConfigurationContext> context)
         {
-            context(Instance as IConfigutaionContext);
+            context(Instance as IConfigurationContext);
 
             var self = Instance as Bus;
             if (self != null && self.AutoScanHandlers) self.InitRegistry();
