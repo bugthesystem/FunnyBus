@@ -5,6 +5,6 @@ namespace Sample.BusinessLayer
 {
     public interface IHomerControllerAgent
     {
-        List<SampleItem> Get(LoadOrdersModel model);
+        List<SampleItem> GetOrders(GetOrdersModel model);
     }
 }

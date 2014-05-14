@@ -17,7 +17,7 @@ namespace Sample.MvcApp.Controllers
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
-            return View("Index", _agent.Get(new LoadOrdersModel { UserId = 10 }));
+            return View("Index", _agent.GetOrders(new GetOrdersModel { UserId = 10 }));
         }
     }
 }

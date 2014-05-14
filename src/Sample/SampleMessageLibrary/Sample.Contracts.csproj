@@ -41,11 +41,12 @@
   <ItemGroup>
     <Compile Include="LoadOrderByIdMessage.cs" />
     <Compile Include="OrderItemModel.cs" />
-    <Compile Include="LoadOrdersMessage.cs" />
+    <Compile Include="GetOrdersMessage.cs" />
     <Compile Include="OrderCreatedMessage.cs" />
     <Compile Include="CreateProductMessage.cs" />
     <Compile Include="DeleteProductMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Results\GetOrdersResult.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

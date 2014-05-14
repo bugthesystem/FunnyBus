@@ -3,6 +3,7 @@ using System.Linq;
 using FunnyBus;
 using Sample.BusinessLayer.Models;
 using Sample.Contracts;
+using Sample.Contracts.Results;
 
 namespace Sample.BusinessLayer
 {
@@ -15,12 +16,12 @@ namespace Sample.BusinessLayer
             _bus = bus;
         }
 
-        public List<SampleItem> Get(LoadOrdersModel model)
+        public List<SampleItem> GetOrders(GetOrdersModel model)
         {
-            var message = new LoadOrdersMessage { UserId = model.UserId };
+            var message = new GetOrdersMessage { UserId = model.UserId };
 
-            var result = _bus.Publish<LoadOrdersMessage,List<OrderItemModel>>(message);
-            return Map(result);
+            var result = _bus.Publish<GetOrdersResult>(message);
+            return Map(result.Orders);
         }
 
         private List<SampleItem> Map(IEnumerable<OrderItemModel> publish)

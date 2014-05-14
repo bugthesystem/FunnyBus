@@ -27,13 +27,13 @@ namespace FunnyBus.Tests
         public void Subscribe_Success_Test()
         {
             Type handlerType = typeof(OrderHandler);
-            Type messageType = typeof(LoadOrdersMessage);
+            Type messageType = typeof(GetOrdersMessage);
 
             _handlersStoreMock.Setup(store => store.Add(handlerType)).Returns(true);
             _handlersStoreMock.Setup(store => store.GetAsIHandleByMessageType(messageType)).Returns(handlerType);
 
             _bus.Subscribe<OrderHandler>();
-            List<OrderItemModel> result = _bus.Publish<LoadOrdersMessage, List<OrderItemModel>>(new LoadOrdersMessage { UserId = 10 });
+            List<OrderItemModel> result = _bus.Publish<GetOrdersMessage, List<OrderItemModel>>(new GetOrdersMessage { UserId = 10 });
 
             result.Should().NotBeEmpty();
         }
@@ -42,7 +42,7 @@ namespace FunnyBus.Tests
         public void Publish_Throws_NotRegisteredException_After_UnSubscribe_Success_Test()
         {
             Type handlerType = typeof(OrderHandler);
-            Type messageType = typeof(LoadOrdersMessage);
+            Type messageType = typeof(GetOrdersMessage);
 
             _handlersStoreMock.Setup(store => store.Add(handlerType)).Returns(true);
             _handlersStoreMock.Setup(store => store.Remove(handlerType)).Returns(true);
@@ -51,7 +51,7 @@ namespace FunnyBus.Tests
             _bus.Subscribe<OrderHandler>();
             _bus.UnSubscribe<OrderHandler>();
 
-            Assert.Throws<NotRegisteredException>(() => _bus.Publish<LoadOrdersMessage, List<OrderItemModel>>(new LoadOrdersMessage { UserId = 10 }));
+            Assert.Throws<NotRegisteredException>(() => _bus.Publish<GetOrdersMessage, List<OrderItemModel>>(new GetOrdersMessage { UserId = 10 }));
         }
     }
 }

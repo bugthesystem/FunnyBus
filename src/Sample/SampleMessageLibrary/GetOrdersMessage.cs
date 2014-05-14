@@ -1,6 +1,6 @@
 namespace Sample.Contracts
 {
-    public class LoadOrdersMessage
+    public class GetOrdersMessage
     {
         public int UserId { get; set; }
     }

@@ -4,6 +4,7 @@ using Autofac;
 using FunnyBus;
 using FunnyBus.Integration.Autofac;
 using Sample.Contracts;
+using Sample.Contracts.Results;
 using Sample.DataLayer;
 
 namespace Sample.ConsoleApp
@@ -22,9 +23,14 @@ namespace Sample.ConsoleApp
             var bus = container.Resolve<IBus>();
 
             bus.Publish(new CreateProductMessage { Name = "Funny Product" });
-            var orders = bus.Publish<LoadOrdersMessage, List<OrderItemModel>>(new LoadOrdersMessage { UserId = 10 });
+            //Publish Impl 1
+            var orders = bus.Publish<GetOrdersMessage, List<OrderItemModel>>(new GetOrdersMessage { UserId = 10 });
+            
+            //Publism Impl 2
+            GetOrdersResult result = bus.Publish<GetOrdersResult>(new GetOrdersMessage { UserId = 10 });
 
             Dump(orders);
+            Dump(result.Orders);
 
             int read = Console.Read();
         }

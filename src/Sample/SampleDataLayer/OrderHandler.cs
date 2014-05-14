@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using FunnyBus;
 using FunnyBus.Infrastructure;
 using Ploeh.AutoFixture;
 using Sample.Contracts;
+using Sample.Contracts.Results;
 
 namespace Sample.DataLayer
 {
     public class OrderHandler :
-        IHandle<LoadOrdersMessage, List<OrderItemModel>>,
+        IHandle<GetOrdersMessage, GetOrdersResult>,
         IHandle<LoadOrderByIdMessage>
     {
         private readonly IBus _bus;
@@ -20,10 +20,10 @@ namespace Sample.DataLayer
             _fixture = new Fixture();
         }
 
-        public List<OrderItemModel> Handle(LoadOrdersMessage message)
+        public GetOrdersResult Handle(GetOrdersMessage message)
         {
             _bus.Publish(new DeleteProductMessage { Id = 10 });
-            return _fixture.CreateMany<OrderItemModel>(10).ToList();
+            return new GetOrdersResult {Orders = _fixture.CreateMany<OrderItemModel>(10).ToList()};
         }
 
         public void Handle(LoadOrderByIdMessage message)
