@@ -12,7 +12,6 @@ namespace FunnyBus
         private readonly IHandlerStore _store;
         private readonly IHandlerScanner _handlerScanner;
 
-        private bool _initCompleted;
         private static readonly Lazy<IBus> LazyInstance = new Lazy<IBus>(() => new Bus(), true);
 
         public Bus()
@@ -31,9 +30,6 @@ namespace FunnyBus
         {
             _store = store;
             _handlerScanner = handlerScanner;
-            AutoScanHandlers = false;
-
-            EnsureSystemInit();
         }
 
         /// <summary>
@@ -50,10 +46,16 @@ namespace FunnyBus
         /// <param name="context"></param>
         public static void Configure(Action<IConfigurationContext> context)
         {
-            context(Instance as IConfigurationContext);
+            var cfgContext = Instance as IConfigurationContext;
+            
+            if (cfgContext != null)
+            {
+                cfgContext.AutoScanHandlers = true;
+                context(cfgContext);
 
-            var self = Instance as Bus;
-            if (self != null && self.AutoScanHandlers) self.InitRegistry();
+                var self = Instance as Bus;
+                if (self != null && self.AutoScanHandlers) self.InitRegistry();
+            }
         }
 
         /// <summary>
@@ -182,15 +184,9 @@ namespace FunnyBus
             _store.Remove(key);
         }
 
-        private void EnsureSystemInit()
-        {
-            if (!_initCompleted && AutoScanHandlers) { InitRegistry(); }
-        }
-
         private void InitRegistry()
         {
             _handlerScanner.RegisterHandlerDefinitions(AddToRegistry);
-            _initCompleted = true;
         }
 
         private void AddToRegistry(Type handler)

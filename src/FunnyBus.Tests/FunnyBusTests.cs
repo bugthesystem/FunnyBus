@@ -19,7 +19,7 @@ namespace FunnyBus.Tests
         {
             _handlersStoreMock = MockFor<IHandlerStore>();
             _ioCMock = MockFor<IFunnyDependencyResolver>();
-            _bus = new Bus(_handlersStoreMock.Object) { IoC = _ioCMock.Object,AutoScanHandlers = false};
+            _bus = new Bus(_handlersStoreMock.Object) { IoC = _ioCMock.Object, AutoScanHandlers = false };
         }
 
         [Test]
