@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Autofac;
-using FunnyBus.Infrastructure.IoC;
+using FunnyBus.Infrastructure.DependencyInjection;
 
 namespace FunnyBus.Integration.Autofac
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using FunnyBus.Exceptions;
 using FunnyBus.Infrastructure.Configuration;
-using FunnyBus.Infrastructure.IoC;
+using FunnyBus.Infrastructure.DependencyInjection;
 using FunnyBus.Infrastructure.Reflection;
 using FunnyBus.Infrastructure.Store;
 

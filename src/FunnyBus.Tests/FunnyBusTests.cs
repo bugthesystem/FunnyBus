@@ -1,5 +1,5 @@
 ﻿using System;
-using FunnyBus.Infrastructure.IoC;
+using FunnyBus.Infrastructure.DependencyInjection;
 using NUnit.Framework;
 using Moq;
 using FluentAssertions;

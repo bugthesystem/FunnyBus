@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FunnyBus.Infrastructure.IoC
+namespace FunnyBus.Infrastructure.DependencyInjection
 {
     public interface IFunnyDependencyResolver
     {

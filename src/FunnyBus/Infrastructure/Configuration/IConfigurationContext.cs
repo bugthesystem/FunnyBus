@@ -1,4 +1,4 @@
-using FunnyBus.Infrastructure.IoC;
+using FunnyBus.Infrastructure.DependencyInjection;
 
 namespace FunnyBus.Infrastructure.Configuration
 {
