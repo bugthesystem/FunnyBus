@@ -58,6 +58,9 @@
     <Compile Include="Extensions\MoqExtensions.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestHandler.cs" />
+    <Compile Include="TestMessage.cs" />
+    <Compile Include="TestMessageResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -66,14 +69,6 @@
     <ProjectReference Include="..\FunnyBus\FunnyBus.csproj">
       <Project>{63742AFE-976B-4B6A-B0B8-F36D5A44B8E9}</Project>
       <Name>FunnyBus</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Samples\Data\Sample.Data.csproj">
-      <Project>{A0F65BA8-4B9F-4238-AF05-3D89C16472A7}</Project>
-      <Name>Sample.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Samples\Contracts\Sample.Contracts.csproj">
-      <Project>{6A6EC9EF-7961-489F-B80F-C1C32C7446BA}</Project>
-      <Name>Sample.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

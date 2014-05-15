@@ -1,57 +1,78 @@
 ﻿using System;
+using FunnyBus.Infrastructure.IoC;
 using NUnit.Framework;
 using Moq;
-
-using Sample.Contracts;
 using FluentAssertions;
 using FunnyBus.Exceptions;
-using System.Collections.Generic;
 using FunnyBus.Infrastructure.Store;
-using Sample.Data;
 
 namespace FunnyBus.Tests
 {
     public class FunnyBusTests : TestBase
     {
         private Mock<IHandlerStore> _handlersStoreMock;
+        private Mock<IFunnyDependencyResolver> _ioCMock;
 
         private IBus _bus;
 
         protected override void FinalizeSetUp()
         {
             _handlersStoreMock = MockFor<IHandlerStore>();
-            _bus = new Bus(_handlersStoreMock.Object);
+            _ioCMock = MockFor<IFunnyDependencyResolver>();
+            _bus = new Bus(_handlersStoreMock.Object) { IoC = _ioCMock.Object,AutoScanHandlers = false};
         }
 
         [Test]
-        public void Subscribe_Success_Test()
+        public void Publish_With_Message_And_ReturnType_Success_Test()
         {
-            Type handlerType = typeof(OrderHandler);
-            Type messageType = typeof(GetOrdersMessage);
+            var handler = new TestHandler();
+            Type handlerType = handler.GetType();
+            Type messageType = new TestMessage().GetType();
 
             _handlersStoreMock.Setup(store => store.Add(handlerType)).Returns(true);
             _handlersStoreMock.Setup(store => store.GetAsIHandleByMessageType(messageType)).Returns(handlerType);
+            _ioCMock.Setup(resolver => resolver.GetService(handlerType)).Returns(handler);
 
-            _bus.Subscribe<OrderHandler>();
-            List<OrderItemModel> result = _bus.Publish<GetOrdersMessage, List<OrderItemModel>>(new GetOrdersMessage { UserId = 10 });
+            _bus.Subscribe<TestHandler>();
+            TestMessageResult result = _bus.Publish<TestMessage, TestMessageResult>(new TestMessage());
 
-            result.Should().NotBeEmpty();
+            result.Should().NotBeNull();
+            result.Success.Should().BeTrue();
+        }
+
+        [Test]
+        public void Publish_With_ReturnType_Success_Test()
+        {
+            var handler = new TestHandler();
+            Type handlerType = handler.GetType();
+            Type messageType = new TestMessage().GetType();
+
+            _handlersStoreMock.Setup(store => store.Add(handlerType)).Returns(true);
+            _handlersStoreMock.Setup(store => store.GetAsIHandleByMessageType(messageType)).Returns(handlerType);
+            _ioCMock.Setup(resolver => resolver.GetService(handlerType)).Returns(handler);
+
+            _bus.Subscribe<TestHandler>();
+            TestMessageResult result = _bus.Publish<TestMessageResult>(new TestMessage());
+
+            result.Should().NotBeNull();
+            result.Success.Should().BeTrue();
         }
 
         [Test]
         public void Publish_Throws_NotRegisteredException_After_UnSubscribe_Success_Test()
         {
-            Type handlerType = typeof(OrderHandler);
-            Type messageType = typeof(GetOrdersMessage);
+            var handler = new TestHandler();
+            Type handlerType = handler.GetType();
+            Type messageType = new TestMessage().GetType();
 
             _handlersStoreMock.Setup(store => store.Add(handlerType)).Returns(true);
             _handlersStoreMock.Setup(store => store.Remove(handlerType)).Returns(true);
             _handlersStoreMock.Setup(store => store.GetAsIHandleByMessageType(messageType)).Returns((Type)null);
 
-            _bus.Subscribe<OrderHandler>();
-            _bus.UnSubscribe<OrderHandler>();
+            _bus.Subscribe<TestHandler>();
+            _bus.UnSubscribe<TestHandler>();
 
-            Assert.Throws<NotRegisteredException>(() => _bus.Publish<GetOrdersMessage, List<OrderItemModel>>(new GetOrdersMessage { UserId = 10 }));
+            Assert.Throws<NotRegisteredException>(() => _bus.Publish<TestMessage, TestMessageResult>(new TestMessage()));
         }
     }
 }

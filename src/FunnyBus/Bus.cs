@@ -31,7 +31,7 @@ namespace FunnyBus
         {
             _store = store;
             _handlerScanner = handlerScanner;
-            AutoScanHandlers = true;
+            AutoScanHandlers = false;
 
             EnsureSystemInit();
         }
@@ -155,7 +155,7 @@ namespace FunnyBus
             handlerInstance.Handle((dynamic)message);
         }
 
-        private IFunnyDependencyResolver IoC { get; set; }
+        internal IFunnyDependencyResolver IoC { get; set; }
 
         #region IConfigutaionContext implementation
 
@@ -184,7 +184,7 @@ namespace FunnyBus
 
         private void EnsureSystemInit()
         {
-            if (!_initCompleted) { InitRegistry(); }
+            if (!_initCompleted && AutoScanHandlers) { InitRegistry(); }
         }
 
         private void InitRegistry()
