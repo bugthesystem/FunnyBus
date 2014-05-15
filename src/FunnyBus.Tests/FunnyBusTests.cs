@@ -3,11 +3,11 @@ using NUnit.Framework;
 using Moq;
 
 using Sample.Contracts;
-using Sample.DataLayer;
 using FluentAssertions;
 using FunnyBus.Exceptions;
 using System.Collections.Generic;
 using FunnyBus.Infrastructure.Store;
+using Sample.Data;
 
 namespace FunnyBus.Tests
 {

@@ -4,17 +4,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F0A499C4-DE66-4DCC-AE64-9EA5FD749084}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{47226D94-6A67-4CEB-BA75-CEA70BFC45DC}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FunnyBus.Tests</RootNamespace>
-    <AssemblyName>FunnyBus.Tests</AssemblyName>
+    <RootNamespace>Sample.ConsoleApp</RootNamespace>
+    <AssemblyName>Sample.ConsoleApp</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,6 +25,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,17 +34,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions">
-      <HintPath>..\packages\FluentAssertions.2.2.0.0\lib\net45\FluentAssertions.dll</HintPath>
+    <Reference Include="Autofac">
+      <HintPath>..\..\packages\Autofac.3.3.1\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
+    <Reference Include="FunnyBus, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\FunnyBus.0.1.2\lib\net45\FunnyBus.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Ploeh.AutoFixture">
-      <HintPath>..\packages\AutoFixture.3.18.1\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+    <Reference Include="FunnyBus.Integration.Autofac, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\FunnyBus.0.1.2\lib\net45\FunnyBus.Integration.Autofac.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,25 +55,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\AssertExtensions.cs" />
-    <Compile Include="FunnyBusTests.cs" />
-    <Compile Include="Extensions\MoqExtensions.cs" />
-    <Compile Include="TestBase.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FunnyBus\FunnyBus.csproj">
-      <Project>{63742AFE-976B-4B6A-B0B8-F36D5A44B8E9}</Project>
-      <Name>FunnyBus</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Samples\Data\Sample.Data.csproj">
-      <Project>{A0F65BA8-4B9F-4238-AF05-3D89C16472A7}</Project>
+    <ProjectReference Include="..\Data\Sample.Data.csproj">
+      <Project>{a0f65ba8-4b9f-4238-af05-3d89c16472a7}</Project>
       <Name>Sample.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Samples\Contracts\Sample.Contracts.csproj">
+    <ProjectReference Include="..\Contracts\Sample.Contracts.csproj">
       <Project>{6A6EC9EF-7961-489F-B80F-C1C32C7446BA}</Project>
       <Name>Sample.Contracts</Name>
     </ProjectReference>

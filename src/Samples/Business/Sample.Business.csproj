@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F0A499C4-DE66-4DCC-AE64-9EA5FD749084}</ProjectGuid>
+    <ProjectGuid>{007753AA-D8E1-484A-B87E-FA8D32C0C786}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FunnyBus.Tests</RootNamespace>
-    <AssemblyName>FunnyBus.Tests</AssemblyName>
+    <RootNamespace>Sample.Business</RootNamespace>
+    <AssemblyName>Sample.Business</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -32,17 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions">
-      <HintPath>..\packages\FluentAssertions.2.2.0.0\lib\net45\FluentAssertions.dll</HintPath>
-    </Reference>
-    <Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Ploeh.AutoFixture">
-      <HintPath>..\packages\AutoFixture.3.18.1\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+    <Reference Include="Autofac">
+      <HintPath>..\..\packages\Autofac.3.3.1\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,28 +44,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\AssertExtensions.cs" />
-    <Compile Include="FunnyBusTests.cs" />
-    <Compile Include="Extensions\MoqExtensions.cs" />
-    <Compile Include="TestBase.cs" />
+    <Compile Include="Infrastructure\BusinessLayerModule.cs" />
+    <Compile Include="Models\GetOrdersModel.cs" />
+    <Compile Include="Models\SampleItem.cs" />
+    <Compile Include="HomerControllerAgent.cs" />
+    <Compile Include="IHomerControllerAgent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FunnyBus\FunnyBus.csproj">
-      <Project>{63742AFE-976B-4B6A-B0B8-F36D5A44B8E9}</Project>
-      <Name>FunnyBus</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Samples\Data\Sample.Data.csproj">
+    <ProjectReference Include="..\Data\Sample.Data.csproj">
       <Project>{A0F65BA8-4B9F-4238-AF05-3D89C16472A7}</Project>
       <Name>Sample.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Samples\Contracts\Sample.Contracts.csproj">
+    <ProjectReference Include="..\Contracts\Sample.Contracts.csproj">
       <Project>{6A6EC9EF-7961-489F-B80F-C1C32C7446BA}</Project>
       <Name>Sample.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\FunnyBus\FunnyBus.csproj">
+      <Project>{63742AFE-976B-4B6A-B0B8-F36D5A44B8E9}</Project>
+      <Name>FunnyBus</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

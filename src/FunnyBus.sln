@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30324.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunnyBus", "FunnyBus\FunnyBus.csproj", "{63742AFE-976B-4B6A-B0B8-F36D5A44B8E9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunnyBus.Integration.Autofac", "FunnyBus.Integration.Autofac\FunnyBus.Integration.Autofac.csproj", "{8939F1FC-E8B5-4C87-996F-4A91704738B7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{6A8A9C1E-9D5A-4D07-A30C-F156BAF91DAF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{6A8A9C1E-9D5A-4D07-A30C-F156BAF91DAF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{7DC0FC6B-9431-44D7-A704-367525D76A7A}"
 EndProject
@@ -15,15 +15,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{25B1415A-6AA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunnyBus.Tests", "FunnyBus.Tests\FunnyBus.Tests.csproj", "{F0A499C4-DE66-4DCC-AE64-9EA5FD749084}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.BusinessLayer", "Sample\SampleBusinessLayer\Sample.BusinessLayer.csproj", "{007753AA-D8E1-484A-B87E-FA8D32C0C786}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Business", "Samples\Business\Sample.Business.csproj", "{007753AA-D8E1-484A-B87E-FA8D32C0C786}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Contracts", "Sample\SampleMessageLibrary\Sample.Contracts.csproj", "{6A6EC9EF-7961-489F-B80F-C1C32C7446BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Contracts", "Samples\Contracts\Sample.Contracts.csproj", "{6A6EC9EF-7961-489F-B80F-C1C32C7446BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.DataLayer", "Sample\SampleDataLayer\Sample.DataLayer.csproj", "{A0F65BA8-4B9F-4238-AF05-3D89C16472A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Data", "Samples\Data\Sample.Data.csproj", "{A0F65BA8-4B9F-4238-AF05-3D89C16472A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.MvcApp", "Sample\Sample.MvcApp\Sample.MvcApp.csproj", "{55CB4DDB-9CC2-49AC-86F3-95BBABDEA982}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.MvcApp", "Samples\MvcApp\Sample.MvcApp.csproj", "{55CB4DDB-9CC2-49AC-86F3-95BBABDEA982}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.ConsoleApp", "Sample\Sample.ConsoleApp\Sample.ConsoleApp.csproj", "{47226D94-6A67-4CEB-BA75-CEA70BFC45DC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.ConsoleApp", "Samples\ConsoleApp\Sample.ConsoleApp.csproj", "{47226D94-6A67-4CEB-BA75-CEA70BFC45DC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{46CBDB1F-B37B-45F8-8D4C-311EEF03FAF8}"
 	ProjectSection(SolutionItems) = preProject
