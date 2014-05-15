@@ -136,7 +136,7 @@ namespace FunnyBus
 
             if (handlerType == null) { throw new NotRegisteredException(messageType); }
 
-            dynamic handlerInstance = IoC.GetService(handlerType);
+            dynamic handlerInstance = DependencyResolver.GetService(handlerType);
             return handlerInstance.Handle((dynamic)message);
         }
 
@@ -153,11 +153,11 @@ namespace FunnyBus
 
             if (handlerTypeAsIHandle == null) { throw new NotRegisteredException(messageType); }
 
-            dynamic handlerInstance = IoC.GetService(handlerTypeAsIHandle);
+            dynamic handlerInstance = DependencyResolver.GetService(handlerTypeAsIHandle);
             handlerInstance.Handle((dynamic)message);
         }
 
-        internal IFunnyDependencyResolver IoC { get; set; }
+        internal IFunnyDependencyResolver DependencyResolver { get; set; }
 
         #region IConfigutaionContext implementation
 
@@ -168,7 +168,7 @@ namespace FunnyBus
         public void SetResolver(IFunnyDependencyResolver funnyDependencyResolver)
         {
             Guard.AgainstNullArgument("funnyDependencyResolver", funnyDependencyResolver);
-            IoC = funnyDependencyResolver;
+            DependencyResolver = funnyDependencyResolver;
         }
 
         /// <summary>

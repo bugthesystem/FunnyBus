@@ -11,15 +11,15 @@ namespace FunnyBus.Tests
     public class FunnyBusTests : TestBase
     {
         private Mock<IHandlerStore> _handlersStoreMock;
-        private Mock<IFunnyDependencyResolver> _ioCMock;
+        private Mock<IFunnyDependencyResolver> _dependencyResolverMock;
 
         private IBus _bus;
 
         protected override void FinalizeSetUp()
         {
             _handlersStoreMock = MockFor<IHandlerStore>();
-            _ioCMock = MockFor<IFunnyDependencyResolver>();
-            _bus = new Bus(_handlersStoreMock.Object) { IoC = _ioCMock.Object, AutoScanHandlers = false };
+            _dependencyResolverMock = MockFor<IFunnyDependencyResolver>();
+            _bus = new Bus(_handlersStoreMock.Object) { DependencyResolver = _dependencyResolverMock.Object, AutoScanHandlers = false };
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace FunnyBus.Tests
 
             _handlersStoreMock.Setup(store => store.Add(handlerType)).Returns(true);
             _handlersStoreMock.Setup(store => store.GetAsIHandleByMessageType(messageType)).Returns(handlerType);
-            _ioCMock.Setup(resolver => resolver.GetService(handlerType)).Returns(handler);
+            _dependencyResolverMock.Setup(resolver => resolver.GetService(handlerType)).Returns(handler);
 
             _bus.Subscribe<TestHandler>();
             TestMessageResult result = _bus.Publish<TestMessage, TestMessageResult>(new TestMessage());
@@ -49,7 +49,7 @@ namespace FunnyBus.Tests
 
             _handlersStoreMock.Setup(store => store.Add(handlerType)).Returns(true);
             _handlersStoreMock.Setup(store => store.GetAsIHandleByMessageType(messageType)).Returns(handlerType);
-            _ioCMock.Setup(resolver => resolver.GetService(handlerType)).Returns(handler);
+            _dependencyResolverMock.Setup(resolver => resolver.GetService(handlerType)).Returns(handler);
 
             _bus.Subscribe<TestHandler>();
             TestMessageResult result = _bus.Publish<TestMessageResult>(new TestMessage());
