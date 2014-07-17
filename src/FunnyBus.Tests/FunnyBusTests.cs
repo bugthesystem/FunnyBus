@@ -63,7 +63,8 @@ namespace FunnyBus.Tests
         {
             var handler = new TestHandler();
             Type handlerType = handler.GetType();
-            Type messageType = new TestMessage().GetType();
+            TestMessage testMessage = new TestMessage();
+            Type messageType = testMessage.GetType();
 
             _handlersStoreMock.Setup(store => store.Add(handlerType)).Returns(true);
             _handlersStoreMock.Setup(store => store.Remove(handlerType)).Returns(true);
@@ -72,7 +73,7 @@ namespace FunnyBus.Tests
             _bus.Subscribe<TestHandler>();
             _bus.UnSubscribe<TestHandler>();
 
-            Assert.Throws<HandlerNotFoundException>(() => _bus.Publish<TestMessage, TestMessageResult>(new TestMessage()));
+            Assert.Throws<HandlerNotFoundException>(() => _bus.Publish<TestMessage, TestMessageResult>(testMessage));
         }
     }
 }
