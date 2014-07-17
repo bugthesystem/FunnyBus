@@ -59,7 +59,7 @@ namespace FunnyBus.Tests
         }
 
         [Test]
-        public void Publish_Throws_NotRegisteredException_After_UnSubscribe_Success_Test()
+        public void Publish_Throws_HandlerNotFoundException_After_UnSubscribe_Success_Test()
         {
             var handler = new TestHandler();
             Type handlerType = handler.GetType();
