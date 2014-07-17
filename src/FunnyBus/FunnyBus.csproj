@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\HandlerNotFoundException.cs" />
     <Compile Include="Exceptions\ResolutionException.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="Infrastructure\HandleDefinition.cs" />

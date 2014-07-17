@@ -72,7 +72,7 @@ namespace FunnyBus.Tests
             _bus.Subscribe<TestHandler>();
             _bus.UnSubscribe<TestHandler>();
 
-            Assert.Throws<NotRegisteredException>(() => _bus.Publish<TestMessage, TestMessageResult>(new TestMessage()));
+            Assert.Throws<HandlerNotFoundException>(() => _bus.Publish<TestMessage, TestMessageResult>(new TestMessage()));
         }
     }
 }

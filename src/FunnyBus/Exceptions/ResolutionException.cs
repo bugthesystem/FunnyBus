@@ -9,11 +9,4 @@ namespace FunnyBus.Exceptions
         {
         }
     }
-    public class NotRegisteredException : Exception
-    {
-        public NotRegisteredException(Type type)
-            : base(string.Format("Handler not found for requested message type {0}", type.FullName))
-        {
-        }
-    }
 }

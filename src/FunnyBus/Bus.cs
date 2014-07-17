@@ -134,7 +134,7 @@ namespace FunnyBus
             Type messageType = message.GetType();
             Type handlerType = _store.GetAsIHandleByMessageType(messageType);
 
-            if (handlerType == null) { throw new NotRegisteredException(messageType); }
+            if (handlerType == null) { throw new HandlerNotFoundException(messageType); }
 
             dynamic handlerInstance = DependencyResolver.GetService(handlerType);
             return handlerInstance.Handle((dynamic)message);
@@ -151,7 +151,7 @@ namespace FunnyBus
             Type messageType = message.GetType();
             Type handlerTypeAsIHandle = _store.GetAsIHandleByMessageType(messageType);
 
-            if (handlerTypeAsIHandle == null) { throw new NotRegisteredException(messageType); }
+            if (handlerTypeAsIHandle == null) { throw new HandlerNotFoundException(messageType); }
 
             dynamic handlerInstance = DependencyResolver.GetService(handlerTypeAsIHandle);
             handlerInstance.Handle((dynamic)message);
