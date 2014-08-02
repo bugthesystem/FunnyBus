@@ -1,9 +1,9 @@
 ﻿using System;
 using FunnyBus.Exceptions;
+using FunnyBus.Infrastructure.Store;
+using FunnyBus.Infrastructure.Reflection;
 using FunnyBus.Infrastructure.Configuration;
 using FunnyBus.Infrastructure.DependencyInjection;
-using FunnyBus.Infrastructure.Reflection;
-using FunnyBus.Infrastructure.Store;
 
 namespace FunnyBus
 {
@@ -46,15 +46,18 @@ namespace FunnyBus
         /// <param name="context"></param>
         public static void Configure(Action<IConfigurationContext> context)
         {
-            var cfgContext = Instance as IConfigurationContext;
-            
-            if (cfgContext != null)
+            var configurationContext = Instance as IConfigurationContext;
+
+            if (configurationContext != null)
             {
-                cfgContext.AutoScanHandlers = true;
-                context(cfgContext);
+                configurationContext.AutoScanHandlers = true;
+                context(configurationContext);
 
                 var self = Instance as Bus;
-                if (self != null && self.AutoScanHandlers) self.InitRegistry();
+                if (self != null && self.AutoScanHandlers)
+                {
+                    self.InitRegistry();
+                }
             }
         }
 
@@ -81,10 +84,20 @@ namespace FunnyBus
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="THandler"></typeparam>
-        public void UnSubscribe<THandler>() where THandler : class
+        /// <typeparam name="TMessage"></typeparam>
+        /// <param name="handler"></param>
+        public void Subscribe<TMessage>(Action<TMessage> handler) where TMessage : class
         {
-            UnSubscribeImpl(typeof(THandler));
+            _store.AddActionHandler(typeof(TMessage), o => handler((TMessage)o));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void UnSubscribe<T>() where T : class
+        {
+            UnSubscribeImpl(typeof(T));
         }
 
         /// <summary>
@@ -149,12 +162,24 @@ namespace FunnyBus
             Guard.AgainstNullArgument("message to publish", message);
 
             Type messageType = message.GetType();
-            Type handlerTypeAsIHandle = _store.GetAsIHandleByMessageType(messageType);
 
-            if (handlerTypeAsIHandle == null) { throw new HandlerNotFoundException(messageType); }
+            if (_store.IsActionHandler(messageType))
+            {
+                foreach (var handlerDefinition in _store.GetActionHandlerDefinitionsByMessageType(messageType))
+                {
+                    handlerDefinition.ProxyAction(message);
+                }
+            }
+            else
+            {
+                Type handlerTypeAsIHandle = _store.GetAsIHandleByMessageType(messageType);
 
-            dynamic handlerInstance = DependencyResolver.GetService(handlerTypeAsIHandle);
-            handlerInstance.Handle((dynamic)message);
+                if (handlerTypeAsIHandle == null) { throw new HandlerNotFoundException(messageType); }
+
+                dynamic handlerInstance = DependencyResolver.GetService(handlerTypeAsIHandle);
+                handlerInstance.Handle((dynamic)message);
+            }
+
         }
 
         internal IFunnyDependencyResolver DependencyResolver { get; set; }

@@ -39,14 +39,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoadOrderByIdMessage.cs" />
-    <Compile Include="OrderItemModel.cs" />
-    <Compile Include="GetOrdersMessage.cs" />
-    <Compile Include="OrderCreatedMessage.cs" />
+    <Compile Include="OperationCompletedMessage.cs" />
+    <Compile Include="GetCartItemByIdMessage.cs" />
+    <Compile Include="CartItem.cs" />
+    <Compile Include="GetShoppingCartMessage.cs" />
     <Compile Include="CreateProductMessage.cs" />
     <Compile Include="DeleteProductMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Results\GetOrdersResult.cs" />
+    <Compile Include="Results\GetShoppingCartResult.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\FunnyBus\FunnyBus.csproj">
+      <Project>{63742AFE-976B-4B6A-B0B8-F36D5A44B8E9}</Project>
+      <Name>FunnyBus</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

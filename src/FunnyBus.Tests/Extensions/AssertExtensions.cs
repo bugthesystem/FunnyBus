@@ -6,14 +6,14 @@ namespace FunnyBus.Tests.Extensions
 {
     public static class AssertExtensions
     {
-        public static async Task ThrowsAsync<TException>(Func<Task> actionToExecute) where TException : Exception
+        public static async Task ThrowsAsync<TException>(Func<Task> action) where TException : Exception
         {
             var expected = typeof(TException);
             Type actual = null;
 
             try
             {
-                await actionToExecute();
+                await action();
             }
             catch (TException exception)
             {

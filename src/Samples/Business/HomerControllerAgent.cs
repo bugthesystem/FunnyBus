@@ -16,17 +16,17 @@ namespace Sample.Business
             _bus = bus;
         }
 
-        public List<SampleItem> GetOrders(GetOrdersModel model)
+        public List<SampleItem> GetShoppingCart(GetShoppingCartFormModel formModel)
         {
-            var message = new GetOrdersMessage { UserId = model.UserId };
+            var message = new GetShoppingCartMessage { UserId = formModel.UserId };
 
-            var result = _bus.Publish<GetOrdersResult>(message);
+            var result = _bus.Publish<GetShoppingCartResult>(message);
             return Map(result.Orders);
         }
 
-        private List<SampleItem> Map(IEnumerable<OrderItemModel> publish)
+        private List<SampleItem> Map(IEnumerable<CartItem> cartItems)
         {
-            return publish.Select(model => new SampleItem
+            return cartItems.Select(model => new SampleItem
             {
                 Name = model.Name
             }).ToList();

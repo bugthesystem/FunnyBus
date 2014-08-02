@@ -5,6 +5,6 @@ namespace Sample.Business
 {
     public interface IHomerControllerAgent
     {
-        List<SampleItem> GetOrders(GetOrdersModel model);
+        List<SampleItem> GetShoppingCart(GetShoppingCartFormModel formModel);
     }
 }

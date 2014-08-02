@@ -1,6 +1,6 @@
 using FunnyBus.Infrastructure;
 
-namespace FunnyBus.Tests
+namespace FunnyBus.Tests.App
 {
     public class TestHandler :
         IHandle<TestMessage, TestMessageResult>

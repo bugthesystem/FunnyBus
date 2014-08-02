@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using Autofac;
 using FunnyBus;
-using FunnyBus.Integration.Autofac;
+using Sample.Data;
 using Sample.Contracts;
 using Sample.Contracts.Results;
-using Sample.Data;
+using System.Collections.Generic;
+using FunnyBus.Integration.Autofac;
 
 namespace Sample.ConsoleApp
 {
@@ -14,7 +14,7 @@ namespace Sample.ConsoleApp
         public static void Main()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterAssemblyTypes(typeof(OrderHandler).Assembly).AsImplementedInterfaces().SingleInstance();
+            builder.RegisterAssemblyTypes(typeof(ShoppingCartHandler).Assembly).AsImplementedInterfaces().SingleInstance();
             builder.Register(context => Bus.Instance).As<IBus>();
 
             IContainer container = builder.Build();
@@ -24,20 +24,23 @@ namespace Sample.ConsoleApp
 
             bus.Publish(new CreateProductMessage { Name = "Funny Product" });
             //Publish Impl 1
-            GetOrdersResult ordersResult = bus.Publish<GetOrdersMessage, GetOrdersResult>(new GetOrdersMessage { UserId = 10 });
-            
-            //Publish Impl 2
-            GetOrdersResult result = bus.Publish<GetOrdersResult>(new GetOrdersMessage { UserId = 10 });
+            GetShoppingCartResult shoppingCartResult = bus.Publish<GetShoppingCartMessage, GetShoppingCartResult>(new GetShoppingCartMessage { UserId = 10 });
 
-            Dump(ordersResult.Orders);
+            //Publish Impl 2
+            GetShoppingCartResult result = bus.Publish<GetShoppingCartResult>(new GetShoppingCartMessage { UserId = 10 });
+
+            Dump(shoppingCartResult.Orders);
             Dump(result.Orders);
 
-            int read = Console.Read();
+            bus.Subscribe<OperationCompletedMessage>(message => Console.WriteLine(message.Result));
+            bus.Publish(new OperationCompletedMessage { Result = "Operation completed." });
+
+            Console.Read();
         }
 
-        private static void Dump(IEnumerable<OrderItemModel> homeItemModels)
+        private static void Dump(IEnumerable<CartItem> homeItemModels)
         {
-            foreach (OrderItemModel homeItemModel in homeItemModels)
+            foreach (CartItem homeItemModel in homeItemModels)
             {
                 Console.WriteLine(homeItemModel.Name);
             }

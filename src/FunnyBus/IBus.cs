@@ -1,11 +1,14 @@
-﻿namespace FunnyBus
+﻿using System;
+
+namespace FunnyBus
 {
     public interface IBus
     {
         void Subscribe<THandler>(THandler handler) where THandler : class;
         void Subscribe<THandler>() where THandler : class;
+        void Subscribe<TMessage>(Action<TMessage> handler) where TMessage : class;
 
-        void UnSubscribe<THandler>() where THandler : class;
+        void UnSubscribe<T>() where T : class;
         void UnSubscribe<THandler>(THandler handler) where THandler : class;
 
         TResult Publish<TMessage, TResult>(TMessage message) where TMessage : class;

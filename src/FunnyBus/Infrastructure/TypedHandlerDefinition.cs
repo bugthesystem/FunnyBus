@@ -2,7 +2,7 @@
 
 namespace FunnyBus.Infrastructure
 {
-    internal class HandleDefinition
+    internal class TypedHandlerDefinition : IHandleDefinition
     {
         public string MessageFullName { get; set; }
         public Type MessageType { get; set; }

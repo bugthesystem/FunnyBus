@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Infrastructure\BusinessLayerModule.cs" />
-    <Compile Include="Models\GetOrdersModel.cs" />
+    <Compile Include="Models\GetShoppingCartFormModel.cs" />
     <Compile Include="Models\SampleItem.cs" />
     <Compile Include="HomerControllerAgent.cs" />
     <Compile Include="IHomerControllerAgent.cs" />

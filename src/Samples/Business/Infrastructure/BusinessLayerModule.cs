@@ -7,7 +7,7 @@ namespace Sample.Business.Infrastructure
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(typeof(OrderHandler).Assembly).AsImplementedInterfaces().SingleInstance();
+            builder.RegisterAssemblyTypes(typeof(ShoppingCartHandler).Assembly).AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<HomerControllerAgent>().As<IHomerControllerAgent>().SingleInstance();
             base.Load(builder);
         }

@@ -1,6 +1,6 @@
 namespace Sample.Business.Models
 {
-    public class GetOrdersModel
+    public class GetShoppingCartFormModel
     {
         public int UserId { get; set; }
     }
