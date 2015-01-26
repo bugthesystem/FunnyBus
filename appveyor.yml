@@ -1,0 +1,15 @@
+configuration: Release
+branches:
+  only:
+    - master
+
+before_build:
+  - nuget restore src/FunnyBus.sln
+
+build:
+  project: src/FunnyBus.sln     
+  verbosity: minimal
+  
+test:
+  assemblies:
+    - '**\*.Tests.dll'
