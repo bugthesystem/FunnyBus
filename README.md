@@ -3,6 +3,8 @@ FunnyBus
 
 Simple event aggregator/messenger for .net applications
 
+[![Build status](https://ci.appveyor.com/api/projects/status/dif9b6d50xrw54yo?svg=true)](https://ci.appveyor.com/project/ziyasal/funnybus)
+
 * [Nuget Package](https://www.nuget.org/packages/FunnyBus/)
 
 ```chasrp
