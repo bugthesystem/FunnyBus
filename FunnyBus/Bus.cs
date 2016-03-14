@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FunnyBus.Exceptions;
 using FunnyBus.Infrastructure;
@@ -169,7 +170,21 @@ namespace FunnyBus
             if (_store.IsActionHandler(messageType))
             {
                 List<ActionHandlerDefinition> handlerDefinitions = _store.GetActionHandlerDefinitionsByMessageType(messageType);
-                Parallel.ForEach(handlerDefinitions, (handlerDefinition) => handlerDefinition.ProxyAction(message));
+
+                if (handlerDefinitions != null && handlerDefinitions.Any())
+                {
+                    if (ParallelHandlerExecution)
+                    {
+                        Parallel.ForEach(handlerDefinitions, (handlerDefinition) => handlerDefinition.ProxyAction(message));
+                    }
+                    else
+                    {
+                        foreach (ActionHandlerDefinition actionHandlerDefinition in handlerDefinitions)
+                        {
+                            actionHandlerDefinition.ProxyAction(message);
+                        }
+                    }
+                }
             }
             else
             {
@@ -178,7 +193,21 @@ namespace FunnyBus
                 if (handlerTypeAsIHandle == null) { throw new HandlerNotFoundException(messageType); }
 
                 IEnumerable<dynamic> handlers = DependencyResolver.GetServices(handlerTypeAsIHandle);
-                Parallel.ForEach(handlers, (handler) => handler.Handle((dynamic)message));
+
+                if (handlers != null && handlers.Any())
+                {
+                    if (ParallelHandlerExecution)
+                    {
+                        Parallel.ForEach(handlers, (handler) => handler.Handle((dynamic)message));
+                    }
+                    else
+                    {
+                        foreach (dynamic handler in handlers)
+                        {
+                            handler.Handle((dynamic)message);
+                        }
+                    }
+                }
             }
         }
 
@@ -200,6 +229,8 @@ namespace FunnyBus
         /// 
         /// </summary>
         public bool AutoScanHandlers { private get; set; }
+
+        public bool ParallelHandlerExecution { private get; set; }
 
         #endregion
 

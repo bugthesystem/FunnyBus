@@ -18,7 +18,8 @@ namespace Sample.ConsoleApp
             builder.Register(context => Bus.Instance).As<IBus>();
 
             IContainer container = builder.Build();
-            Bus.Configure(context => context.SetResolver(new AutofacFunnyDependencyResolver(container)));
+            Bus.Configure(c => c.SetResolver(new AutofacFunnyDependencyResolver(container)));
+            Bus.Configure(c => c.ParallelHandlerExecution = true);
 
             var bus = container.Resolve<IBus>();
 
