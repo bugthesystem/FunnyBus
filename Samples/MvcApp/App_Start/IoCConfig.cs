@@ -21,7 +21,11 @@ namespace Sample.MvcApp
 
             IContainer container = builder.Build();
 
-            Bus.Configure(context => context.SetResolver(new AutofacFunnyDependencyResolver(container)));
+            Bus.Configure(context =>
+            {
+                context.SetResolver(new AutofacFunnyDependencyResolver(container));
+                context.ParallelHandlerExecution = true;
+            });
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }

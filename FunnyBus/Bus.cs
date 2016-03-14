@@ -192,22 +192,7 @@ namespace FunnyBus
 
                 if (handlerTypeAsIHandle == null) { throw new HandlerNotFoundException(messageType); }
 
-                IEnumerable<dynamic> handlers = DependencyResolver.GetServices(handlerTypeAsIHandle);
-
-                if (handlers != null && handlers.Any())
-                {
-                    if (ParallelHandlerExecution)
-                    {
-                        Parallel.ForEach(handlers, (handler) => handler.Handle((dynamic)message));
-                    }
-                    else
-                    {
-                        foreach (dynamic handler in handlers)
-                        {
-                            handler.Handle((dynamic)message);
-                        }
-                    }
-                }
+                StartExecutionProcess(message, handlerTypeAsIHandle);
             }
         }
 
@@ -232,6 +217,8 @@ namespace FunnyBus
 
         public bool ParallelHandlerExecution { private get; set; }
 
+        public bool IsolatedHandlerScopes { private get; set; }
+
         #endregion
 
         private void UnSubscribeImpl(Type key)
@@ -249,6 +236,44 @@ namespace FunnyBus
         {
             Guard.AgainstNullArgument("handler", handler);
             _store.Add(handler);
+        }
+
+        private void ExecuteHandlers(IFunnyDependencyResolver scope, Type handlerTypeAsIHandle, object message)
+        {
+            IEnumerable<dynamic> handlers = scope.GetServices(handlerTypeAsIHandle);
+
+            if (handlers != null && handlers.Any())
+            {
+                if (ParallelHandlerExecution)
+                {
+                    Parallel.ForEach(handlers, (handler) => handler.Handle((dynamic)message));
+                }
+                else
+                {
+                    foreach (dynamic handler in handlers)
+                    {
+                        handler.Handle((dynamic)message);
+                    }
+                }
+            }
+        }
+
+        private void StartExecutionProcess(object message, Type handlerTypeAsIHandle)
+        {
+            if (IsolatedHandlerScopes)
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    using (var scope = DependencyResolver.BeginNewScope())
+                    {
+                        ExecuteHandlers(scope, handlerTypeAsIHandle, message);
+                    }
+                });
+            }
+            else
+            {
+                ExecuteHandlers(DependencyResolver, handlerTypeAsIHandle, message);
+            }
         }
     }
 }
