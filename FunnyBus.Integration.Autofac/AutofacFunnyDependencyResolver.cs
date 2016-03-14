@@ -7,14 +7,16 @@ namespace FunnyBus.Integration.Autofac
 {
     public class AutofacFunnyDependencyResolver : IFunnyDependencyResolver
     {
-        private readonly IContainer _container;
+        private readonly ILifetimeScope _rootScope;
+        private List<AutofacFunnyDependencyResolver> _childs = new List<AutofacFunnyDependencyResolver>();
+
         /// <summary>
         /// C'tor
         /// </summary>
         /// <param name="container">Autofac container instance</param>
-        public AutofacFunnyDependencyResolver(IContainer container)
+        public AutofacFunnyDependencyResolver(ILifetimeScope container)
         {
-            _container = container;
+            _rootScope = container;
         }
 
         /// <summary>
@@ -24,7 +26,7 @@ namespace FunnyBus.Integration.Autofac
         /// <returns></returns>
         public object GetService(Type serviceType)
         {
-            return _container.Resolve(serviceType);
+            return _rootScope.Resolve(serviceType);
         }
 
         /// <summary>
@@ -35,9 +37,35 @@ namespace FunnyBus.Integration.Autofac
         public IEnumerable<object> GetServices(Type serviceType)
         {
             var enumerableServiceType = typeof(IEnumerable<>).MakeGenericType(serviceType);
-            var instance = _container.Resolve(enumerableServiceType);
+            var instance = _rootScope.Resolve(enumerableServiceType);
 
             return (IEnumerable<object>)instance;
+        }
+
+        public IFunnyDependencyResolver BeginNewScope()
+        {
+            AutofacFunnyDependencyResolver newScope = new AutofacFunnyDependencyResolver(_rootScope.BeginLifetimeScope());
+            _childs.Add(newScope);
+            return newScope;
+        }
+
+        public void Dispose()
+        {
+            if (_childs != null && _childs.Count > 0)
+            {
+                foreach (AutofacFunnyDependencyResolver dependencyScope in _childs)
+                {
+                    if (dependencyScope != null)
+                    {
+                        dependencyScope.Dispose();
+                    }
+                }
+            }
+
+            if (_rootScope != null)
+            {
+                _rootScope.Dispose();
+            }
         }
     }
 }

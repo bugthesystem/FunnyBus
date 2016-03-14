@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using FunnyBus.Exceptions;
+using FunnyBus.Infrastructure;
 using FunnyBus.Infrastructure.Store;
 using FunnyBus.Infrastructure.Reflection;
 using FunnyBus.Infrastructure.Configuration;
@@ -165,9 +169,21 @@ namespace FunnyBus
 
             if (_store.IsActionHandler(messageType))
             {
-                foreach (var handlerDefinition in _store.GetActionHandlerDefinitionsByMessageType(messageType))
+                List<ActionHandlerDefinition> handlerDefinitions = _store.GetActionHandlerDefinitionsByMessageType(messageType);
+
+                if (handlerDefinitions != null && handlerDefinitions.Any())
                 {
-                    handlerDefinition.ProxyAction(message);
+                    if (ParallelHandlerExecution)
+                    {
+                        Parallel.ForEach(handlerDefinitions, (handlerDefinition) => handlerDefinition.ProxyAction(message));
+                    }
+                    else
+                    {
+                        foreach (ActionHandlerDefinition actionHandlerDefinition in handlerDefinitions)
+                        {
+                            actionHandlerDefinition.ProxyAction(message);
+                        }
+                    }
                 }
             }
             else
@@ -176,10 +192,8 @@ namespace FunnyBus
 
                 if (handlerTypeAsIHandle == null) { throw new HandlerNotFoundException(messageType); }
 
-                dynamic handlerInstance = DependencyResolver.GetService(handlerTypeAsIHandle);
-                handlerInstance.Handle((dynamic)message);
+                StartExecutionProcess(message, handlerTypeAsIHandle);
             }
-
         }
 
         internal IFunnyDependencyResolver DependencyResolver { get; set; }
@@ -201,6 +215,10 @@ namespace FunnyBus
         /// </summary>
         public bool AutoScanHandlers { private get; set; }
 
+        public bool ParallelHandlerExecution { private get; set; }
+
+        public bool IsolatedHandlerScopes { private get; set; }
+
         #endregion
 
         private void UnSubscribeImpl(Type key)
@@ -218,6 +236,44 @@ namespace FunnyBus
         {
             Guard.AgainstNullArgument("handler", handler);
             _store.Add(handler);
+        }
+
+        private void ExecuteHandlers(IFunnyDependencyResolver scope, Type handlerTypeAsIHandle, object message)
+        {
+            IEnumerable<dynamic> handlers = scope.GetServices(handlerTypeAsIHandle);
+
+            if (handlers != null && handlers.Any())
+            {
+                if (ParallelHandlerExecution)
+                {
+                    Parallel.ForEach(handlers, (handler) => handler.Handle((dynamic)message));
+                }
+                else
+                {
+                    foreach (dynamic handler in handlers)
+                    {
+                        handler.Handle((dynamic)message);
+                    }
+                }
+            }
+        }
+
+        private void StartExecutionProcess(object message, Type handlerTypeAsIHandle)
+        {
+            if (IsolatedHandlerScopes)
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    using (var scope = DependencyResolver.BeginNewScope())
+                    {
+                        ExecuteHandlers(scope, handlerTypeAsIHandle, message);
+                    }
+                });
+            }
+            else
+            {
+                ExecuteHandlers(DependencyResolver, handlerTypeAsIHandle, message);
+            }
         }
     }
 }

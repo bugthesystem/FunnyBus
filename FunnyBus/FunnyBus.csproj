@@ -45,6 +45,7 @@
     <Compile Include="Exceptions\HandlerNotFoundException.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="Infrastructure\ActionHandlerDefinition.cs" />
+    <Compile Include="Infrastructure\DependencyInjection\IFunnyDependencyScope.cs" />
     <Compile Include="Infrastructure\TypedHandlerDefinition.cs" />
     <Compile Include="Infrastructure\IHandleDefinition.cs" />
     <Compile Include="Infrastructure\Reflection\HandlerScanner.cs" />

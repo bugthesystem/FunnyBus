@@ -6,5 +6,7 @@ namespace FunnyBus.Infrastructure.Configuration
     {
         void SetResolver(IFunnyDependencyResolver funnyDependencyResolver);
         bool AutoScanHandlers { set; }
+        bool ParallelHandlerExecution { set; }
+        bool IsolatedHandlerScopes { set; }
     }
 }
