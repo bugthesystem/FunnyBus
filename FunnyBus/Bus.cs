@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using FunnyBus.Exceptions;
+using FunnyBus.Infrastructure;
 using FunnyBus.Infrastructure.Store;
 using FunnyBus.Infrastructure.Reflection;
 using FunnyBus.Infrastructure.Configuration;
@@ -165,10 +168,8 @@ namespace FunnyBus
 
             if (_store.IsActionHandler(messageType))
             {
-                foreach (var handlerDefinition in _store.GetActionHandlerDefinitionsByMessageType(messageType))
-                {
-                    handlerDefinition.ProxyAction(message);
-                }
+                List<ActionHandlerDefinition> handlerDefinitions = _store.GetActionHandlerDefinitionsByMessageType(messageType);
+                Parallel.ForEach(handlerDefinitions, (handlerDefinition) => handlerDefinition.ProxyAction(message));
             }
             else
             {
@@ -176,10 +177,9 @@ namespace FunnyBus
 
                 if (handlerTypeAsIHandle == null) { throw new HandlerNotFoundException(messageType); }
 
-                dynamic handlerInstance = DependencyResolver.GetService(handlerTypeAsIHandle);
-                handlerInstance.Handle((dynamic)message);
+                IEnumerable<dynamic> handlers = DependencyResolver.GetServices(handlerTypeAsIHandle);
+                Parallel.ForEach(handlers, (handler) => handler.Handle((dynamic)message));
             }
-
         }
 
         internal IFunnyDependencyResolver DependencyResolver { get; set; }

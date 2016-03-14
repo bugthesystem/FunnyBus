@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnotherProductHandler.cs" />
     <Compile Include="ShoppingCartHandler.cs" />
     <Compile Include="ProductHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
