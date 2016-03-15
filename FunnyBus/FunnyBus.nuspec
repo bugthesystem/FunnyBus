@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>FunnyBus</id>
-        <version>0.1.3</version>
+        <version>0.1.4</version>
         <authors>ziyasal</authors>
         <owners>ziyasal</owners>
         <projectUrl>https://github.com/ziyasal/FunnyBus</projectUrl>
@@ -16,8 +16,6 @@
     </metadata>
     <files>
         <file src="..\BuildArtifacts\FunnyBus\bin\net40\FunnyBus.dll" target="lib\net40\FunnyBus.dll" />
-        <file src="..\BuildArtifacts\FunnyBus.Integration.Autofac\bin\net40\FunnyBus.Integration.Autofac.dll" target="lib\net40\FunnyBus.Integration.Autofac.dll" />
         <file src="..\BuildArtifacts\FunnyBus\bin\net45\FunnyBus.dll" target="lib\net45\FunnyBus.dll" />
-        <file src="..\BuildArtifacts\FunnyBus.Integration.Autofac\bin\net45\FunnyBus.Integration.Autofac.dll" target="lib\net45\FunnyBus.Integration.Autofac.dll" />
     </files>
 </package>
