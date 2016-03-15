@@ -17,14 +17,10 @@ namespace FunnyBus.Infrastructure.Reflection
                     {
                         foreach (Type @interface in definedType.GetInterfaces())
                         {
-#if NET40
                             Type[] genericTypeArguments = @interface.GetGenericArguments();
-#else
-                            Type[] genericTypeArguments = @interface.GenericTypeArguments;
-#endif
                             Type genericType = null;
 
-                            switch (genericTypeArguments.Count())
+                            switch (genericTypeArguments.Length)
                             {
                                 case 1:
                                     genericType = typeof(IHandle<>).MakeGenericType(genericTypeArguments.First());
